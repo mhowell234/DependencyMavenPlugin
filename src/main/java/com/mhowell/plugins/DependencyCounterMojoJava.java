@@ -13,18 +13,18 @@ import java.util.List;
 
 @Mojo(name = "dependency-counter-java", defaultPhase = LifecyclePhase.COMPILE)
 public class DependencyCounterMojoJava extends AbstractMojo {
-	@Parameter(defaultValue = "${project}", required = true, readonly = true)
-	MavenProject project;
+    @Parameter(defaultValue = "${project}", required = true, readonly = true)
+    MavenProject project;
 
-	@Parameter(property = "scope")
-	String scope;
+    @Parameter(property = "scope")
+    String scope;
 
-	public void execute() throws MojoExecutionException, MojoFailureException {
-		List<Dependency> dependencies = project.getDependencies();
-		var matchingDependencies =
-				dependencies.stream().filter(d -> null == scope || scope.isEmpty() || scope.equals(d.getScope())).toList();
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        List<Dependency> dependencies = project.getDependencies();
+        var matchingDependencies =
+                dependencies.stream().filter(d -> null == scope || scope.isEmpty() || scope.equals(d.getScope())).toList();
 
-		getLog().info("Number of dependencies: " + matchingDependencies.size());
-		matchingDependencies.forEach(d -> getLog().info(d.getGroupId() + ":" + " " + d.getArtifactId() + ":" + d.getVersion() + " - " + d.getScope()));
-	}
+        getLog().info("Number of dependencies: " + matchingDependencies.size());
+        matchingDependencies.forEach(d -> getLog().info(d.getGroupId() + ":" + " " + d.getArtifactId() + ":" + d.getVersion() + " - " + d.getScope()));
+    }
 }
